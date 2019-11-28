@@ -1,19 +1,19 @@
 Develop a Minix Disk program that allows users to access a Minix disk locally mounted on a computer. You are expected to use C programming language. In your program, all file I/O related operations should use the system calls discussed in our lectures, including open(), read(), write(), lseek(), close(), and you should not use those library functions like fopen() and fread(). Your implementation must work on Linux machine.
-
-Required Modules:
-Client Environment (a minix console): the console (interface) allows users to access the minix disk by using the following commands:
-help: show the commands supported in the minix console.
-minimount argument: mount a local minix disk, where "argument" is a iminix image file, e.g., imagefile.img.
-miniumount: umount the mounted minix disk.
-showsuper: to list the information of the super block. For example:
-minix: showsuper
-
-number of inodes: 	3424
-number of zones: 	10240
-number of imap_blocks: 	1
-number of zmap_blocks: 	2
-first data zone: 	112
-log zone size: 		0
+                      
+Required Modules:                
+Client Environment (a minix console): the console (interface) allows users to access the minix disk by using the following commands:                      
+help: show the commands supported in the minix console.                      
+minimount argument: mount a local minix disk, where "argument" is a iminix image file, e.g., imagefile.img.              
+miniumount: umount the mounted minix disk.             
+showsuper: to list the information of the super block. For example:                     
+minix: showsuper                 
+                      
+number of inodes:     3424                                                   
+number of zones:      10240                 
+number of imap_blocks: 	1                     
+number of zmap_blocks: 	2                     
+first data zone: 	112                   
+log zone size: 		0                     
 max size: 		268966912
 magic: 			5007
 state: 			0
