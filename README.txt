@@ -1,13 +1,5 @@
-Fall 19 (1) CIS 340 Systems Programming Section 1:  Project 4
-
-group11:	Miller	 Michael		m.miller89@vikes.csuohio.edu
-		Trem	 Bryce			b.trem@vikes.csuohio.edu
-
-Contribution: %50/%50
-
-Compile Instructions:  
-1.  In terminal, navigate to assignment folder: "group11".
-3.  Type './minix' to run.
+		Miller	 Michael		
+		Trem	 Bryce			
 
 Sample Outputs:
 
