@@ -127,12 +127,7 @@ void showsuper() {
 }
 
 //Contains super block information
-/**
- * Lists the contents of the root directory on the mounted drive.
- * @param flag Specifies a flag to run against the command. Currently only -l is 
- * supported, which lists the directory contents in longlist form.
- * @returns SUCCESS on successful traversal, FAILURE otherwise.
- */
+
 void traverse(char* flag) {
     	if (fd < 0) {
         fprintf(stdout, "Cannot transverse\n");
