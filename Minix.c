@@ -32,6 +32,7 @@ void help();
 
 
 //mikes
+
 void help() {
     fprintf(stdout, "The available minix commands are:\n");
     fprintf(stdout, "    help                    - show the commands list.\n");
@@ -44,8 +45,10 @@ void help() {
 }
 
 
-void permissionString(unsigned short mode, char* holdingCell) {
 
+void permissionString(unsigned short mode, char* holdingCell) {
+	
+    // print the permission bits
     holdingCell[0] = (mode & S_IFDIR) ? 'd' : '-';
     holdingCell[1] = (mode & S_IRUSR) ? 'r' : '-';
     holdingCell[2] = (mode & S_IWUSR) ? 'w' : '-';
@@ -65,7 +68,11 @@ void nodeSeek(int inode, int firstInode) {
 }
 
 
-//Mount the image
+/**
+ * Mounts a Minix disk image from the path given by img.
+ * @param img A path to a Minix disk image.
+ * @returns SUCCESS on successful mount, FAILURE otherwise.
+ */
 void minimount(char* fname){
     if ((fd = open(fname,O_RDONLY)) >= 0) { //read only
         return;
@@ -74,7 +81,11 @@ void minimount(char* fname){
         return;
     }
 }
-//unmount the image
+
+/**
+ * Unmounts a mounted disk image.
+ * @returns SUCCESS on successful dismount, FAILURE otherwise.
+ */
 void miniumount() {
     if(fd < 0) {
         //print error
@@ -116,6 +127,12 @@ void showsuper() {
 }
 
 //Contains super block information
+/**
+ * Lists the contents of the root directory on the mounted drive.
+ * @param flag Specifies a flag to run against the command. Currently only -l is 
+ * supported, which lists the directory contents in longlist form.
+ * @returns SUCCESS on successful traversal, FAILURE otherwise.
+ */
 void traverse(char* flag) {
     	if (fd < 0) {
         fprintf(stdout, "Cannot transverse\n");
@@ -186,6 +203,11 @@ void traverse(char* flag) {
     return;
 }
 // This is where the ASCII content will be shown from the zone number 
+/**
+ * Shows zone information on a given zone number.
+ * @param zonenumber A zonenumber from the mounted image.
+ * @returns SUCCESS if the zone was read suceesfully, FAILURE otherwise.
+ */
 void showzone(int zone_num) {
     if(fd < 0) {
         fprintf(stdout, "Cannot find zone\n");
@@ -257,6 +279,13 @@ int findFile(char *fname, int inode, int firstInode) {
     free(tmpNode);
     return fileInumber;
 }
+
+/**
+ * Shows the contents of a file in the root directory of the mounted Minix image.
+ * @param filename A filename frm the root directory of the image.
+ * @returns SUCCESS if the file was read successfully, FAILURE otherwise.
+ */
+
 void showfile(char *fname) {
 
     if(fd < 0)  {
@@ -268,10 +297,25 @@ void showfile(char *fname) {
         fprintf(stdout, "File not found\n");
       
     }
-    //hex dump
+    /* Steps needed to implement this method:
+     * 1.) Grab the root inode
+     * 2.) Starting at the first zone (dir)...
+     *  a.) Read in the entire block representing the zone
+     *  b.) Convert every 32 bytes to a minix_dir_entry and check the name
+     *  c.) If the name mathces the given filename then go to step 3
+     *  d.) Otherwise repeat until all direntries have been checked
+     *  e.) If not found advance to the next zone
+     * 3.) Assuming we found the minix_dir_entry corresponding to the given filename:
+     *  a.) Grab the inode from the filesystem
+     *  b.) Starting at the first file zone
+     *   i.) Grab the entire block representing the zone
+     *   ii.) Print out the zone as hex
+     * 4.) If the filename is not found, then print out a message saying so
+     */
   
     struct minix_inode* tmpNode = (struct minix_inode*)malloc(sizeof(struct minix_inode));  //Used for temporary inode in -l
-
+     
+    //hex dump
     //reads the superblock & moves to the first inode 
     lseek(fd, __BLOCK_SIZE, SEEK_SET);    
     struct minix_super_block* messageBuf = (struct minix_super_block*)malloc(sizeof(struct minix_super_block));
